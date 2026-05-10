@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тонкая талия: Секретный протокол</title>
+    
+    <style>
+        :root {
+            --bg: #FDFBF7;
+            --glass: rgba(255, 255, 255, 0.4);
+            --glass-strong: rgba(255, 255, 255, 0.6);
+            --glass-border: rgba(255, 255, 255, 0.8);
+            --dark: #000000;
+            --accent: #B09374;
+            --text-sec: #86868b;
+            --sf-bold: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--dark);
+            line-height: 1.5;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(176, 147, 116, 0.12) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(176, 147, 116, 0.08) 0px, transparent 50%);
+            min-height: 100vh;
+        }
+
+        .glass-ui {
+            background: var(--glass);
+            backdrop-filter: blur(25px) saturate(180%);
+            -webkit-backdrop-filter: blur(25px) saturate(180%);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.04);
+        }
+
+        nav {
+            position: fixed;
+            top: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            padding: 6px;
+            border-radius: 100px;
+            display: flex;
+            gap: 4px;
+        }
+
+        nav button {
+            background: transparent;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 100px;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--dark);
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: var(--sf-bold);
+            opacity: 0.4;
+        }
+
+        nav button.active {
+            background: #fff;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            opacity: 1;
+        }
+
+        .container { max-width: 800px; margin: 0 auto; padding: 0 24px; }
+        .page { display: none; padding-top: 140px; padding-bottom: 80px; }
+        .page.active { display: block; animation: fadeIn 0.7s ease-out; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .card {
+            background: var(--glass);
+            backdrop-filter: blur(35px) saturate(180%);
+            -webkit-backdrop-filter: blur(35px) saturate(180%);
+            border: 1px solid var(--glass-border);
+            border-radius: 36px;
+            padding: 40px;
+            margin-bottom: 24px;
+        }
+
+        h1 { font-family: var(--sf-bold); font-size: clamp(42px, 10vw, 82px); line-height: 0.95; letter-spacing: -0.05em; margin-bottom: 24px; text-align: center; }
+        h1 em { font-style: normal; color: var(--accent); }
+        h2 { font-family: var(--sf-bold); font-size: 30px; margin-bottom: 12px; letter-spacing: -0.03em; }
+
+        .label {
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .btn-pay {
+            background: var(--glass-strong);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            color: var(--dark);
+            padding: 22px 52px;
+            border-radius: 100px;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 700;
+            font-family: var(--sf-bold);
+            display: inline-block;
+            transition: all 0.4s cubic-bezier(0.15, 0, 0.15, 1);
+            border: 1px solid var(--glass-border);
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+
+        .btn-pay:hover {
+            background: var(--dark);
+            color: #fff;
+            transform: scale(1.02) translateY(-2px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+
+        /* --- Footer & Disclaimer --- */
+        .disclaimer-section {
+            margin-top: 60px;
+            padding-top: 40px;
+            border-top: 1px solid rgba(0,0,0,0.05);
+            text-align: center;
+        }
+
+        .legal-text {
+            font-size: 11px;
+            color: var(--text-sec);
+            line-height: 1.6;
+            max-width: 600px;
+            margin: 0 auto 20px;
+            text-align: justify;
+            opacity: 0.7;
+        }
+
+        .legal-links a {
+            color: var(--dark);
+            text-decoration: none;
+            font-size: 11px;
+            font-weight: 600;
+            margin: 0 10px;
+            opacity: 0.5;
+            transition: 0.3s;
+        }
+
+        .legal-links a:hover { opacity: 1; }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 54px; }
+            .card { padding: 32px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="glass-ui">
+        <button id="nav-home" class="active" onclick="showPage('home')">Протокол</button>
+        <button id="nav-pro" onclick="showPage('pro')">PRO Доступ</button>
+    </nav>
+
+    <main id="page-home" class="page active">
+        <div class="container">
+            <header style="margin-bottom: 100px; text-align: center;">
+                <h1>Тонкая талия<br>без <em>скручиваний</em></h1>
+            </header>
+
+            <div class="card">
+                <span class="label">Шаг 1. Биохимия</span>
+                <h2>Убираем отёки</h2>
+                <p style="color: var(--text-sec);">Информационные советы по питанию для вывода лишней жидкости.</p>
+            </div>
+
+            <div class="card">
+                <span class="label">Шаг 2. Корсет</span>
+                <h2>Вакуум</h2>
+                <p style="color: var(--text-sec);">Техника работы с поперечной мышцей живота.</p>
+            </div>
+
+            <div style="text-align: center; margin-top: 40px;">
+                <button class="btn-pay" onclick="showPage('pro')">Получить полный протокол</button>
+            </div>
+        </div>
+    </main>
+
+    <main id="page-pro" class="page">
+        <div class="container">
+            <div class="card glass-ui" style="text-align: center; padding: 60px 40px;">
+                <span class="label">14 дней до результата</span>
+                <h2 style="font-size: 44px;">Полный доступ</h2>
+                <div style="font-family: var(--sf-bold); font-size: 72px; margin: 20px 0;">1 990 ₽</div>
+                
+                <a href="ТВОЯ_ССЫЛКА_ЮМОНИ" class="btn-pay" style="width: 100%; max-width: 420px;">Оплатить доступ</a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="container">
+        <div class="disclaimer-section">
+            <p class="legal-text">
+                Отказ от ответственности: Информация, представленная на данном сайте и в обучающих материалах, носит исключительно ознакомительный характер. Автор не является медицинским работником. Перед началом любых тренировок или изменением режима питания необходимо проконсультироваться с лечащим врачом. Результаты индивидуальны и зависят от личных особенностей организма, строгого соблюдения рекомендаций и исходных данных. Автор не гарантирует достижение конкретных результатов в определенные сроки. Покупка продукта означает ваше согласие с тем, что ответственность за ваше здоровье лежит исключительно на вас.
+            </p>
+            <div class="legal-links">
+                <a href="#">Публичная оферта</a>
+                <a href="#">Политика конфиденциальности</a>
+                <a href="#">Контакты</a>
+            </div>
+            <p style="font-size: 11px; color: var(--text-sec); margin-top: 20px; opacity: 0.4;">
+                © 2026 Протокол «Тонкая талия». Все права защищены.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+            document.getElementById('page-' + pageId).classList.add('active');
+            document.getElementById('nav-' + pageId).classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
