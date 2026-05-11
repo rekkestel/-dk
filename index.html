@@ -1,70 +1,1081 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SLIMYFLEX | Slim Waist Protocol</title>
-    <script src="https://yookassa.ru/checkout-widget/v1/checkout-widget.js"></script>
-    <style>
-        :root { --bg: #FDFBF7; --dark: #000; --accent: #B09374; }
-        body { font-family: -apple-system, sans-serif; background: var(--bg); color: var(--dark); line-height: 1.6; margin: 0; padding: 20px; }
-        .container { max-width: 800px; margin: 0 auto; }
-        .card { background: #fff; padding: 30px; border-radius: 30px; margin-bottom: 20px; border: 1px solid #eee; }
-        .badge { background: #27ae60; color: #fff; padding: 4px 10px; border-radius: 10px; font-size: 12px; }
-        h1 { font-size: 42px; letter-spacing: -1px; text-align: center; }
-        .btn-pay { display: block; width: 100%; background: var(--dark); color: #fff; padding: 20px; text-align: center; border-radius: 50px; text-decoration: none; font-weight: bold; font-size: 18px; cursor: pointer; border: none; }
-        .disclaimer { font-size: 12px; color: #888; margin-top: 40px; padding: 20px; border: 1px solid #ddd; border-radius: 15px; }
-        footer { text-align: center; margin-top: 40px; font-size: 13px; color: #666; }
-        #payment-form { margin-top: 20px; }
-    </style>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SlimyFlex — Лимфодренажный протокол</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<script src="https://yookassa.ru/checkout-widget/v1/checkout-widget.js"></script>
+<style>
+  :root {
+    --bg: #FDFBF7;
+    --accent: #B09374;
+    --accent-light: #C9B49A;
+    --accent-deep: #8A7057;
+    --black: #0F0E0C;
+    --dark: #1A1915;
+    --text: #2C2A26;
+    --text-muted: #6B6760;
+    --glass-bg: rgba(253,251,247,0.72);
+    --glass-border: rgba(176,147,116,0.18);
+    --radius-lg: 36px;
+    --radius-md: 24px;
+    --radius-sm: 14px;
+    --shadow-soft: 0 8px 48px rgba(176,147,116,0.12);
+    --shadow-card: 0 2px 24px rgba(15,14,12,0.07);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.65;
+    overflow-x: hidden;
+  }
+
+  /* ─── NOISE TEXTURE OVERLAY ─── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+  }
+
+  /* ─── LAYOUT ─── */
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 24px;
+    position: relative;
+    z-index: 1;
+  }
+
+  section { position: relative; z-index: 1; }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 20px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(253,251,247,0.82);
+    backdrop-filter: blur(24px) saturate(1.4);
+    -webkit-backdrop-filter: blur(24px) saturate(1.4);
+    border-bottom: 1px solid var(--glass-border);
+  }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--black);
+    text-decoration: none;
+  }
+
+  .nav-logo span { color: var(--accent); }
+
+  .nav-cta {
+    background: var(--black);
+    color: var(--bg);
+    border: none;
+    padding: 10px 24px;
+    border-radius: 100px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    cursor: pointer;
+    transition: background 0.22s, transform 0.15s;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .nav-cta:hover { background: var(--accent-deep); transform: translateY(-1px); }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 120px 0 80px;
+    overflow: hidden;
+  }
+
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 32px;
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    display: block;
+    width: 28px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(52px, 9vw, 96px);
+    font-weight: 300;
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+    color: var(--black);
+    margin-bottom: 28px;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero-sub {
+    font-size: clamp(16px, 2vw, 19px);
+    color: var(--text-muted);
+    max-width: 520px;
+    line-height: 1.7;
+    margin-bottom: 52px;
+    font-weight: 300;
+  }
+
+  .hero-sub strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 72px;
+  }
+
+  .btn-primary {
+    background: var(--black);
+    color: var(--bg);
+    border: none;
+    padding: 16px 36px;
+    border-radius: 100px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 400;
+    cursor: pointer;
+    transition: all 0.22s;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .btn-primary:hover {
+    background: var(--accent-deep);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(138,112,87,0.28);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--text);
+    border: 1.5px solid rgba(176,147,116,0.4);
+    padding: 15px 32px;
+    border-radius: 100px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 400;
+    cursor: pointer;
+    transition: all 0.22s;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--accent);
+    color: var(--accent-deep);
+    transform: translateY(-2px);
+  }
+
+  .hero-proof {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+
+  .proof-item { display: flex; flex-direction: column; gap: 3px; }
+
+  .proof-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px;
+    font-weight: 600;
+    color: var(--black);
+    line-height: 1;
+  }
+
+  .proof-label {
+    font-size: 12px;
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+  }
+
+  /* ─── DECORATIVE BLOB ─── */
+  .hero-blob {
+    position: absolute;
+    right: -10%;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 480px;
+    height: 480px;
+    border-radius: 50% 38% 62% 40% / 42% 55% 45% 58%;
+    background: radial-gradient(135deg, rgba(176,147,116,0.14) 0%, rgba(176,147,116,0.04) 60%, transparent 100%);
+    animation: morphBlob 12s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  @keyframes morphBlob {
+    0%, 100% { border-radius: 50% 38% 62% 40% / 42% 55% 45% 58%; }
+    33% { border-radius: 62% 50% 38% 48% / 55% 42% 58% 45%; }
+    66% { border-radius: 42% 62% 50% 38% / 58% 45% 55% 42%; }
+  }
+
+  /* ─── DIVIDER ─── */
+  .divider {
+    width: 60px;
+    height: 1px;
+    background: var(--accent);
+    margin: 0 auto 24px;
+    opacity: 0.5;
+  }
+
+  /* ─── SECTION HEADERS ─── */
+  .section-eyebrow {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 5vw, 58px);
+    font-weight: 300;
+    line-height: 1.1;
+    color: var(--black);
+    margin-bottom: 16px;
+  }
+
+  .section-title em { font-style: italic; color: var(--accent); }
+
+  .section-lead {
+    font-size: 17px;
+    color: var(--text-muted);
+    max-width: 560px;
+    line-height: 1.7;
+  }
+
+  /* ─── FREE PROTOCOL ─── */
+  .protocol-section {
+    padding: 100px 0;
+    background: var(--bg);
+  }
+
+  .protocol-header {
+    margin-bottom: 64px;
+  }
+
+  .protocol-badge {
+    display: inline-block;
+    background: rgba(176,147,116,0.12);
+    border: 1px solid rgba(176,147,116,0.3);
+    color: var(--accent-deep);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border-radius: 100px;
+    margin-bottom: 20px;
+  }
+
+  .protocol-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .step-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    padding: 40px 44px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: var(--shadow-card);
+    transition: transform 0.25s, box-shadow 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .step-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+    opacity: 0.5;
+  }
+
+  .step-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 48px rgba(176,147,116,0.14);
+  }
+
+  .step-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 72px;
+    font-weight: 300;
+    color: var(--accent);
+    opacity: 0.2;
+    position: absolute;
+    top: 20px; right: 36px;
+    line-height: 1;
+  }
+
+  .step-tag {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .step-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--black);
+    margin-bottom: 20px;
+    line-height: 1.2;
+  }
+
+  .step-body {
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.75;
+  }
+
+  .step-body p { margin-bottom: 14px; }
+  .step-body p:last-child { margin-bottom: 0; }
+
+  .step-body strong {
+    color: var(--black);
+    font-weight: 500;
+  }
+
+  .step-highlight {
+    background: rgba(176,147,116,0.08);
+    border-left: 3px solid var(--accent);
+    padding: 16px 20px;
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    margin: 20px 0;
+    font-size: 14px;
+    color: var(--text-muted);
+    font-style: italic;
+  }
+
+  .step-list {
+    list-style: none;
+    padding: 0;
+    margin: 16px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .step-list li {
+    padding-left: 22px;
+    position: relative;
+    font-size: 15px;
+  }
+
+  .step-list li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-weight: 400;
+  }
+
+  /* ─── PRO BLOCK ─── */
+  .pro-section {
+    padding: 100px 0;
+    position: relative;
+  }
+
+  .pro-card {
+    background: var(--dark);
+    border-radius: var(--radius-lg);
+    padding: 72px 64px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .pro-card::before {
+    content: '';
+    position: absolute;
+    top: -120px; right: -120px;
+    width: 360px; height: 360px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(176,147,116,0.18) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .pro-card::after {
+    content: '';
+    position: absolute;
+    bottom: -80px; left: -80px;
+    width: 240px; height: 240px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(176,147,116,0.1) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .pro-eyebrow {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .pro-eyebrow::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(176,147,116,0.25);
+    max-width: 80px;
+  }
+
+  .pro-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(40px, 6vw, 64px);
+    font-weight: 300;
+    color: #F5F2EC;
+    line-height: 1.05;
+    margin-bottom: 24px;
+    letter-spacing: -0.01em;
+  }
+
+  .pro-title em {
+    font-style: italic;
+    color: var(--accent-light);
+  }
+
+  .pro-desc {
+    font-size: 16px;
+    color: rgba(245,242,236,0.6);
+    line-height: 1.7;
+    max-width: 520px;
+    margin-bottom: 48px;
+  }
+
+  .pro-features {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 52px;
+  }
+
+  .pro-feature {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(176,147,116,0.15);
+    border-radius: var(--radius-md);
+    padding: 24px 28px;
+    backdrop-filter: blur(8px);
+    transition: background 0.22s, border-color 0.22s;
+  }
+
+  .pro-feature:hover {
+    background: rgba(176,147,116,0.08);
+    border-color: rgba(176,147,116,0.3);
+  }
+
+  .feature-icon {
+    font-size: 22px;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .feature-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: #F5F2EC;
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+
+  .feature-desc {
+    font-size: 13px;
+    color: rgba(245,242,236,0.5);
+    line-height: 1.6;
+  }
+
+  .pro-bottom {
+    display: flex;
+    align-items: center;
+    gap: 36px;
+    flex-wrap: wrap;
+  }
+
+  .pro-price-block { display: flex; flex-direction: column; gap: 4px; }
+
+  .pro-price-old {
+    font-size: 15px;
+    color: rgba(245,242,236,0.35);
+    text-decoration: line-through;
+  }
+
+  .pro-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 52px;
+    font-weight: 600;
+    color: #F5F2EC;
+    line-height: 1;
+  }
+
+  .pro-price span { font-size: 24px; font-weight: 300; }
+
+  .pro-price-note {
+    font-size: 12px;
+    color: rgba(245,242,236,0.4);
+    margin-top: 4px;
+  }
+
+  .btn-pro {
+    background: var(--accent);
+    color: var(--black);
+    border: none;
+    padding: 18px 42px;
+    border-radius: 100px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.22s;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .btn-pro:hover {
+    background: var(--accent-light);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 36px rgba(176,147,116,0.4);
+  }
+
+  .pro-guarantee {
+    font-size: 12px;
+    color: rgba(245,242,236,0.3);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 20px;
+  }
+
+  /* ─── PAYMENT MODAL ─── */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15,14,12,0.72);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 200;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+
+  .modal-overlay.active { display: flex; }
+
+  .modal {
+    background: var(--bg);
+    border-radius: var(--radius-lg);
+    padding: 48px 44px;
+    max-width: 480px;
+    width: 100%;
+    position: relative;
+    box-shadow: 0 32px 80px rgba(15,14,12,0.3);
+    animation: modalIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  @keyframes modalIn {
+    from { opacity: 0; transform: translateY(24px) scale(0.96); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 20px; right: 20px;
+    background: rgba(176,147,116,0.1);
+    border: none;
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    color: var(--text-muted);
+    transition: background 0.18s;
+    line-height: 1;
+  }
+
+  .modal-close:hover { background: rgba(176,147,116,0.2); }
+
+  .modal-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 600;
+    color: var(--black);
+    margin-bottom: 10px;
+  }
+
+  .modal-sub {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-bottom: 32px;
+    line-height: 1.6;
+  }
+
+  #payment-widget { min-height: 200px; }
+
+  /* ─── DISCLAIMER ─── */
+  .disclaimer-section {
+    padding: 80px 0;
+    border-top: 1px solid rgba(176,147,116,0.15);
+  }
+
+  .disclaimer-box {
+    background: rgba(176,147,116,0.05);
+    border: 1px solid rgba(176,147,116,0.15);
+    border-radius: var(--radius-md);
+    padding: 36px 40px;
+  }
+
+  .disclaimer-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--black);
+    margin-bottom: 16px;
+  }
+
+  .disclaimer-text {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.75;
+  }
+
+  .disclaimer-text p { margin-bottom: 12px; }
+  .disclaimer-text p:last-child { margin-bottom: 0; }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--black);
+    color: rgba(245,242,236,0.5);
+    padding: 48px 0 36px;
+  }
+
+  .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 40px;
+    flex-wrap: wrap;
+    margin-bottom: 36px;
+  }
+
+  .footer-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 600;
+    color: #F5F2EC;
+    letter-spacing: 0.04em;
+  }
+
+  .footer-brand span { color: var(--accent); }
+
+  .footer-brand p {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    color: rgba(245,242,236,0.4);
+    font-weight: 300;
+    margin-top: 6px;
+  }
+
+  .footer-details {
+    font-size: 13px;
+    line-height: 1.8;
+  }
+
+  .footer-details a {
+    color: var(--accent-light);
+    text-decoration: none;
+  }
+
+  .footer-details a:hover {
+    color: var(--accent);
+  }
+
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.07);
+    padding-top: 24px;
+    font-size: 12px;
+    color: rgba(245,242,236,0.25);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  /* ─── ANIMATE ON SCROLL ─── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.65s ease, transform 0.65s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 720px) {
+    nav { padding: 16px 20px; }
+    .hero { padding: 100px 0 60px; }
+    .hero-blob { display: none; }
+    .pro-card { padding: 44px 28px; }
+    .pro-features { grid-template-columns: 1fr; }
+    .pro-bottom { flex-direction: column; align-items: flex-start; gap: 24px; }
+    .step-card { padding: 28px 24px; }
+    .footer-inner { flex-direction: column; }
+    .footer-bottom { flex-direction: column; }
+    .hero-proof { gap: 28px; }
+  }
+</style>
 </head>
 <body>
 
-<div class="container">
-    <header style="text-align: center; padding: 40px 0;">
-        <span style="letter-spacing: 2px; font-size: 12px; font-weight: bold;">PROJECT 2026</span>
-        <h1>SlimyFlex</h1>
-    </header>
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Slimy<span>Flex</span></a>
+  <a href="#pro" class="nav-cta">Получить PRO</a>
+</nav>
 
-    <div class="card">
-        <span class="badge">БЕСПЛАТНЫЙ ШАГ</span>
-        <h2>Лимфодренажные прыжки</h2>
-        <p>Каждое утро делай 100 мелких прыжков (пятки едва отрываются от пола). Это "пробивает" лимфу и убирает утренние отеки с живота и лица.</p>
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-blob"></div>
+  <div class="container">
+    <div class="hero-eyebrow">Лимфодренажный протокол</div>
+    <h1 class="hero-title">
+      Тело меняется<br>
+      <em>изнутри.</em>
+    </h1>
+    <p class="hero-sub">
+      Не диета. Не изнурительный фитнес. <strong>Точечная работа с лимфой, фасцией и осанкой</strong> — то, о чём молчат классические тренеры. Минус отёк за первое утро.
+    </p>
+    <div class="hero-actions">
+      <a href="#protocol" class="btn-primary">Читать бесплатный протокол</a>
+      <a href="#pro" class="btn-secondary">PRO — 1 490 ₽</a>
+    </div>
+    <div class="hero-proof">
+      <div class="proof-item">
+        <span class="proof-num">3</span>
+        <span class="proof-label">техники в базовом гайде</span>
+      </div>
+      <div class="proof-item">
+        <span class="proof-num">7+</span>
+        <span class="proof-label">модулей в PRO</span>
+      </div>
+      <div class="proof-item">
+        <span class="proof-num">1 утро</span>
+        <span class="proof-label">до первого эффекта</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FREE PROTOCOL -->
+<section class="protocol-section" id="protocol">
+  <div class="container">
+    <div class="protocol-header reveal">
+      <div class="protocol-badge">Бесплатный протокол</div>
+      <h2 class="section-title">Лимфодренажный<br><em>старт</em></h2>
+      <p class="section-lead">Три техники, которые работают сами по себе. Но вместе — запускают системный дренаж тела за одно утро.</p>
     </div>
 
-    <div class="card" style="background: var(--dark); color: #fff;">
-        <h2>Получить PRO-протокол</h2>
-        <p>Полный гайд: 3 уровня вакуума, диета против вздутия и секретный комплекс для талии.</p>
-        <div style="font-size: 32px; font-weight: bold; margin: 20px 0;">1 490 ₽</div>
-        
-        <button class="btn-pay" onclick="startPayment()">ОПЛАТИТЬ И ПОЛУЧИТЬ</button>
-        
-        <div id="payment-form"></div>
-    </div>
+    <div class="protocol-steps">
 
-    <div class="disclaimer">
-        <strong>ОТКАЗ ОТ ОТВЕТСТВЕННОСТИ:</strong> Данный гайд носит ознакомительный характер. Перед выполнением упражнений проконсультируйтесь с врачом. Автор не несет ответственности за возможные травмы. Цифровые товары возврату не подлежат.
-    </div>
+      <!-- STEP 1 -->
+      <div class="step-card reveal">
+        <span class="step-number">01</span>
+        <span class="step-tag">Утренний ритуал · 5 минут</span>
+        <h3 class="step-title">Вибро-прыжки: пробуждение лимфы</h3>
+        <div class="step-body">
+          <p>Лимфатическая система — единственная в теле, у которой нет собственного насоса. Сердце гоняет кровь. Лимфу гонят <strong>мышечные сокращения и вибрация</strong>. Пока вы лежите — лимфа стоит. Отёк накапливается именно ночью: горизонтальное положение, нет движения, интерстициальная жидкость застаивается в тканях. Вот почему лицо и живот «опухают» к утру.</p>
+          <div class="step-highlight">
+            Вибро-прыжок — это не прыжок в полную силу. Это мягкое, частое пружинение на передней части стопы с чуть согнутыми коленями. Пятка от пола почти не отрывается.
+          </div>
+          <p><strong>Как выполнять:</strong></p>
+          <ul class="step-list">
+            <li>Встаньте босиком сразу после подъёма — до кофе и телефона</li>
+            <li>Ноги на ширине бёдер, колени мягко пружинят, плечи расслаблены вниз</li>
+            <li>Начните мелко и часто пружинить на носках: 1–2 см от пола, 2–3 раза в секунду</li>
+            <li>Дышите свободно через нос. Рот закрыт — это усиливает диафрагмальный насос</li>
+            <li>Продолжайте <strong>3–5 минут</strong> непрерывно</li>
+          </ul>
+          <p>Почему это работает: вибрация активирует лимфатические клапаны и разгоняет жидкость к ключичным лимфоузлам — главному «стоку» верхней половины тела. После первого же раза вы заметите, что лицо стало чище, а живот — более плоским. Не потому что вы похудели. Потому что тело слило то, что стояло.</p>
+        </div>
+      </div>
 
-    <footer>
-        <p>ШУВАРАКОВ МИХАИЛ АНТОНОВИЧ</p>
-        <p>ИНН: 540702472194</p>
-        <p>Email: fort33tekken@gmail.com</p>
-    </footer>
+      <!-- STEP 2 -->
+      <div class="step-card reveal">
+        <span class="step-number">02</span>
+        <span class="step-tag">Лимфатический слив · 2–3 минуты</span>
+        <h3 class="step-title">Метод «открытия» ключиц</h3>
+        <div class="step-body">
+          <p>Большинство людей живёт со сдавленными ключицами — плечи ушли вперёд, грудной отдел закрылся. В этой позиции лимфоузлы надключичной зоны буквально пережаты. Лимфа гонится наверх, но выход закупорен. Результат — отёки на лице, мешки под глазами, тяжесть в шее. Один простой маневр открывает этот слив за минуты.</p>
+          <div class="step-highlight">
+            Зона Пирогова — это треугольник между ключицей и кивательной мышцей. Именно здесь лимфа из всего тела уходит в венозную кровь. Если этот узел зажат — дренажа нет.
+          </div>
+          <p><strong>Техника выполнения:</strong></p>
+          <ul class="step-list">
+            <li>Сидите или стоите с прямой спиной. Подбородок чуть опущен</li>
+            <li>Указательный и средний пальцы положите в надключичную ямку (углубление над ключицей)</li>
+            <li>Мягко нажмите и совершайте медленные круговые движения вглубь — 15 кругов на каждой стороне</li>
+            <li>Затем: откиньте голову назад, раскройте грудь, сведите лопатки — задержитесь на 5 секунд. Повторите 5 раз</li>
+            <li>Завершите: медленно опустите подбородок к груди, почувствуйте растяжение задней поверхности шеи — здесь проходит лимфатический проток</li>
+          </ul>
+          <p>После этой техники многие отмечают лёгкое покалывание в шее и ощущение «прилива» — это нормально. Это и есть момент, когда лимфа пошла. Делайте каждое утро после вибро-прыжков, пока не разберётесь с осанкой системно — это уже PRO уровень.</p>
+        </div>
+      </div>
+
+      <!-- STEP 3 -->
+      <div class="step-card reveal">
+        <span class="step-number">03</span>
+        <span class="step-tag">Поперечная мышца · 3 минуты</span>
+        <h3 class="step-title">Микро-вакуум: живот минус 2 см за 3 минуты</h3>
+        <div class="step-body">
+          <p>Поперечная мышца живота (transversus abdominis) — это ваш внутренний корсет. Она не тренируется скручиваниями и планкой. Большинство людей никогда её не включали. Именно её слабость даёт эффект «вываленного» живота даже при низком проценте жира. <strong>Микро-вакуум активирует её за секунды и создаёт моментальный визуальный эффект.</strong></p>
+          <div class="step-highlight">
+            Это не втягивание живота. Это принципиально разные механизмы. Втягивание — прямые мышцы. Вакуум — поперечная. Почувствуйте разницу.
+          </div>
+          <p><strong>Базовая техника (стоя или лёжа):</strong></p>
+          <ul class="step-list">
+            <li>Сделайте глубокий вдох через нос, наполняя живот</li>
+            <li>На <strong>медленном выдохе через рот</strong> — тяните пупок к позвоночнику. Не напрягайте прямые мышцы, не задерживайте дыхание грубо</li>
+            <li>В точке максимального втяжения — задержите на 5–8 секунд. Дышите сверхповерхностно, если можете</li>
+            <li>Расслабьте и повторите 10–15 раз в 2–3 подхода</li>
+          </ul>
+          <p>Что происходит внутри: поперечная мышца сжимает брюшную полость со всех сторон, как обруч, перемещает внутренние органы на своё анатомическое место и активирует лимфатические сосуды брюшины. Сочетание с вибро-прыжками усиливает эффект в разы — жидкость уходит, живот опускается, талия визуально сужается. <strong>Без изменения веса.</strong></p>
+          <div class="step-highlight">
+            Система из этих трёх техник — это фундамент. Но без понимания воспаления, осанки и питания она работает вполсилы. Если вы дочитали до этого места — вы уже понимаете логику. PRO-протокол строится на этой же логике, но идёт значительно глубже.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PRO BLOCK -->
+<section class="pro-section" id="pro">
+  <div class="container">
+    <div class="pro-card reveal">
+      <div class="pro-eyebrow">SlimyFlex PRO</div>
+      <h2 class="pro-title">
+        Тело, которое вы<br>
+        <em>заслуживаете видеть.</em>
+      </h2>
+      <p class="pro-desc">
+        Базовый протокол даёт первый эффект. PRO — объясняет, почему он недолго держится без системы, и даёт эту систему. Полностью.
+      </p>
+
+      <div class="pro-features">
+        <div class="pro-feature">
+          <span class="feature-icon">◈</span>
+          <div class="feature-title">3 уровня прогрессии вакуума</div>
+          <div class="feature-desc">От базового втяжения до удержания на голодном желудке в движении. Каждый уровень — новый слой включения поперечной и тазового дна.</div>
+        </div>
+        <div class="pro-feature">
+          <span class="feature-icon">◈</span>
+          <div class="feature-title">Протокол Anti-Acne питания</div>
+          <div class="feature-desc">Не диета с запретами. Конкретная схема против системного воспаления и тканевых отёков: что, когда и почему. Работает на коже и животе одновременно.</div>
+        </div>
+        <div class="pro-feature">
+          <span class="feature-icon">◈</span>
+          <div class="feature-title">Осанка и наклон таза</div>
+          <div class="feature-desc">Передний наклон таза — главная причина «вываленного» живота у стройных людей. Пошаговый протокол коррекции: мышцы, паттерны движения, фиксация результата.</div>
+        </div>
+        <div class="pro-feature">
+          <span class="feature-icon">◈</span>
+          <div class="feature-title">Бонусный гайд «Чистое лицо»</div>
+          <div class="feature-desc">Лимфодренаж лица, работа с жевательными мышцами и техники, снимающие отёчность с первого применения. То, что визажисты используют перед съёмками.</div>
+        </div>
+      </div>
+
+      <div class="pro-bottom">
+        <div class="pro-price-block">
+          <span class="pro-price-old">2 990 ₽</span>
+          <div class="pro-price">1 490 <span>₽</span></div>
+          <span class="pro-price-note">единоразово · мгновенный доступ</span>
+        </div>
+        <button class="btn-pro" onclick="openPayment()">Получить PRO сейчас →</button>
+      </div>
+
+      <p class="pro-guarantee">
+        ⓘ Цифровой товар — доступ предоставляется мгновенно после оплаты. Возврат не предусмотрен.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- DISCLAIMER -->
+<section class="disclaimer-section">
+  <div class="container">
+    <div class="disclaimer-box reveal">
+      <div class="disclaimer-title">Отказ от ответственности</div>
+      <div class="disclaimer-text">
+        <p>Все материалы SlimyFlex носят исключительно <strong>информационный и образовательный характер</strong> и не являются медицинской рекомендацией, диагнозом или назначением лечения. Перед началом любых физических практик проконсультируйтесь с врачом.</p>
+        <p>Результаты индивидуальны и зависят от исходного состояния организма, регулярности применения и образа жизни. Автор не несёт ответственности за последствия применения техник без учёта индивидуальных противопоказаний.</p>
+        <p><strong>Цифровые товары возврату и обмену не подлежат.</strong> Доступ к PRO-материалам предоставляется немедленно после успешной оплаты.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div>
+        <div class="footer-brand">Slimy<span>Flex</span>
+          <p>Лимфодренажный протокол</p>
+        </div>
+      </div>
+      <div class="footer-details">
+        <strong style="color:rgba(245,242,236,0.7); font-weight:500;">Реквизиты продавца</strong><br>
+        ИП Шувараков Михаил Антонович<br>
+        ИНН: 540702472194<br>
+        Банк: АО «ТБанк»<br>
+        Р/с: 40817810900138703642<br>
+        Контакт: <a href="mailto:fort33tekken@gmail.com">fort33tekken@gmail.com</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 SlimyFlex. Шувараков Михаил Антонович.</span>
+      <span>Все материалы защищены авторским правом.</span>
+    </div>
+  </div>
+</footer>
+
+<!-- PAYMENT MODAL -->
+<div class="modal-overlay" id="payModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closePayment()">×</button>
+    <div class="modal-title">SlimyFlex PRO</div>
+    <p class="modal-sub">1 490 ₽ · Мгновенный доступ к полному протоколу после оплаты.</p>
+    <div id="payment-widget"></div>
+  </div>
 </div>
 
 <script>
-function startPayment() {
-    // ВАЖНО: Токен нужно получать через API ЮKassa или создавать вручную счет в кабинете
-    const checkout = new YooMoneyCheckoutWidget({
-        confirmation_token: 'YOUR_CONFIRMATION_TOKEN', // Сюда вставляешь токен счета
-        return_url: 'https://slimyflex.ru/success.html', // Страница после оплаты
-        error_callback: function(error) { console.log(error); }
+  // ── Reveal on scroll ──
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 60);
+        observer.unobserve(entry.target);
+      }
     });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
 
-    checkout.render('payment-form');
-}
+  // ── Payment ──
+  function openPayment() {
+    document.getElementById('payModal').classList.add('active');
+    pay();
+  }
+
+  function closePayment() {
+    document.getElementById('payModal').classList.remove('active');
+    document.getElementById('payment-widget').innerHTML = '';
+  }
+
+  document.getElementById('payModal').addEventListener('click', function(e) {
+    if (e.target === this) closePayment();
+  });
+
+  function pay() {
+    const widget = new window.YooMoneyCheckoutWidget({
+      confirmation_token: 'ЗАМЕНИТЕ_НА_ТОКЕН_ОТ_ЮKASSA',
+      // Получите confirmation_token через API ЮKassa на вашем бекенде:
+      // POST https://api.yookassa.ru/v3/payments
+      // Документация: https://yookassa.ru/developers/payment-forms/widget
+      return_url: window.location.origin + '/?payment=success',
+      error_callback: function(error) {
+        console.error('Ошибка оплаты:', error);
+      }
+    });
+    widget.render('payment-widget');
+  }
+
+  // ── Success check ──
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('payment') === 'success') {
+    const banner = document.createElement('div');
+    banner.style.cssText = `
+      position:fixed; top:80px; left:50%; transform:translateX(-50%);
+      background:#1A1915; color:#F5F2EC; padding:16px 32px;
+      border-radius:100px; font-size:14px; z-index:300;
+      box-shadow:0 8px 32px rgba(0,0,0,0.3);
+      font-family:'DM Sans',sans-serif;
+    `;
+    banner.textContent = '✓ Оплата прошла успешно — проверьте почту!';
+    document.body.appendChild(banner);
+    setTimeout(() => banner.remove(), 6000);
+  }
 </script>
-
 </body>
 </html>
