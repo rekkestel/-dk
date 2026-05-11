@@ -816,7 +816,7 @@
     </p>
     <div class="hero-actions">
       <a href="#protocol" class="btn-primary">Читать бесплатный протокол</a>
-      <a href="#pro" class="btn-secondary">PRO — 1 490 ₽</a>
+      <a href="#pro" class="btn-secondary">PRO — 500 ₽</a>
     </div>
     <div class="hero-proof">
       <div class="proof-item">
@@ -957,7 +957,7 @@
       <div class="pro-bottom">
         <div class="pro-price-block">
           <span class="pro-price-old">2 990 ₽</span>
-          <div class="pro-price">1 490 <span>₽</span></div>
+          <div class="pro-price">500<span>₽</span></div>
           <span class="pro-price-note">единоразово · мгновенный доступ</span>
         </div>
         <button class="btn-pro" onclick="openPayment()">Получить PRO сейчас →</button>
@@ -1047,20 +1047,9 @@
     if (e.target === this) closePayment();
   });
 
-  function pay() {
-    const widget = new window.YooMoneyCheckoutWidget({
-      confirmation_token: 'ЗАМЕНИТЕ_НА_ТОКЕН_ОТ_ЮKASSA',
-      // Получите confirmation_token через API ЮKassa на вашем бекенде:
-      // POST https://api.yookassa.ru/v3/payments
-      // Документация: https://yookassa.ru/developers/payment-forms/widget
-      return_url: window.location.origin + '/?payment=success',
-      error_callback: function(error) {
-        console.error('Ошибка оплаты:', error);
-      }
-    });
-    widget.render('payment-widget');
-  }
-
+ function pay() {
+    window.location.href = 'https://yookassa.ru/my/i/agHukfWuTP2P/l';
+}
   // ── Success check ──
   const params = new URLSearchParams(window.location.search);
   if (params.get('payment') === 'success') {
