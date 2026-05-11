@@ -3,157 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SLIMYFLEX | Slim Waist & Skin Protocol</title>
+    <title>SLIMYFLEX | Slim Waist Protocol</title>
+    <script src="https://yookassa.ru/checkout-widget/v1/checkout-widget.js"></script>
     <style>
-        :root {
-            --bg: #FDFBF7;
-            --glass: rgba(255, 255, 255, 0.9);
-            --dark: #000000;
-            --accent: #B09374;
-            --sf-bold: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
-        }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
-            background: var(--bg);
-            color: var(--dark);
-            line-height: 1.8;
-            background-image: radial-gradient(at 0% 0%, rgba(176, 147, 116, 0.1) 0px, transparent 50%);
-        }
-
-        .container { max-width: 850px; margin: 0 auto; padding: 60px 20px; }
-
-        .header { text-align: center; margin-bottom: 80px; }
-        .badge { background: var(--dark); color: #fff; padding: 6px 14px; border-radius: 50px; font-size: 11px; font-weight: 800; letter-spacing: 2px; display: inline-block; }
-        h1 { font-family: var(--sf-bold); font-size: clamp(32px, 8vw, 52px); letter-spacing: -0.05em; margin-top: 20px; line-height: 1.1; }
-
-        .section-card {
-            background: var(--glass);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(0,0,0,0.05);
-            border-radius: 40px;
-            padding: 50px;
-            margin-bottom: 40px;
-            box-shadow: 0 15px 45px rgba(0,0,0,0.02);
-        }
-
-        .free-label { color: #27ae60; font-weight: 800; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 10px; }
-        
-        h2 { font-family: var(--sf-bold); font-size: 32px; margin-bottom: 25px; }
-        h3 { font-size: 20px; margin-top: 30px; margin-bottom: 15px; font-family: var(--sf-bold); color: var(--accent); }
-        
-        .content { font-size: 17px; color: #1d1d1f; }
-        .content p { margin-bottom: 20px; }
-
-        .step-list { list-style: none; counter-reset: step-counter; margin: 30px 0; }
-        .step-list li { position: relative; padding-left: 60px; margin-bottom: 35px; }
-        .step-list li::before { 
-            content: counter(step-counter); 
-            counter-increment: step-counter; 
-            position: absolute; left: 0; top: 0;
-            width: 40px; height: 40px; background: var(--dark); color: #fff;
-            border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            font-weight: 800; font-size: 14px;
-        }
-
-        .cta-box {
-            background: var(--dark);
-            color: #fff;
-            border-radius: 40px;
-            padding: 60px 40px;
-            text-align: center;
-            margin-top: 60px;
-        }
-
-        .price { font-size: 48px; font-family: var(--sf-bold); margin: 20px 0; color: var(--accent); }
-
-        .btn-buy {
-            display: inline-block;
-            background: var(--accent);
-            color: #fff;
-            padding: 22px 50px;
-            border-radius: 100px;
-            text-decoration: none;
-            font-weight: 800;
-            font-size: 18px;
-            transition: 0.3s;
-        }
-
-        .btn-buy:hover { transform: scale(1.05); box-shadow: 0 10px 30px rgba(176, 147, 116, 0.4); }
-
-        /* ТА САМАЯ ПЛАШКА */
-        .disclaimer-box {
-            background: #fff;
-            border: 1px solid #d2d2d7;
-            border-radius: 25px;
-            padding: 30px;
-            margin-top: 60px;
-            font-size: 13px;
-            color: #86868b;
-            line-height: 1.6;
-        }
-
-        footer { text-align: center; padding: 60px 0; opacity: 0.5; font-size: 12px; }
+        :root { --bg: #FDFBF7; --dark: #000; --accent: #B09374; }
+        body { font-family: -apple-system, sans-serif; background: var(--bg); color: var(--dark); line-height: 1.6; margin: 0; padding: 20px; }
+        .container { max-width: 800px; margin: 0 auto; }
+        .card { background: #fff; padding: 30px; border-radius: 30px; margin-bottom: 20px; border: 1px solid #eee; }
+        .badge { background: #27ae60; color: #fff; padding: 4px 10px; border-radius: 10px; font-size: 12px; }
+        h1 { font-size: 42px; letter-spacing: -1px; text-align: center; }
+        .btn-pay { display: block; width: 100%; background: var(--dark); color: #fff; padding: 20px; text-align: center; border-radius: 50px; text-decoration: none; font-weight: bold; font-size: 18px; cursor: pointer; border: none; }
+        .disclaimer { font-size: 12px; color: #888; margin-top: 40px; padding: 20px; border: 1px solid #ddd; border-radius: 15px; }
+        footer { text-align: center; margin-top: 40px; font-size: 13px; color: #666; }
+        #payment-form { margin-top: 20px; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <div class="header">
-        <span class="badge">SYSTEM 2026</span>
-        <h1>SlimyFlex: Архитектура Тела</h1>
+    <header style="text-align: center; padding: 40px 0;">
+        <span style="letter-spacing: 2px; font-size: 12px; font-weight: bold;">PROJECT 2026</span>
+        <h1>SlimyFlex</h1>
+    </header>
+
+    <div class="card">
+        <span class="badge">БЕСПЛАТНЫЙ ШАГ</span>
+        <h2>Лимфодренажные прыжки</h2>
+        <p>Каждое утро делай 100 мелких прыжков (пятки едва отрываются от пола). Это "пробивает" лимфу и убирает утренние отеки с живота и лица.</p>
     </div>
 
-    <div class="section-card">
-        <span class="free-label">Бесплатный доступ</span>
-        <h2>01. Лимфодренажный протокол</h2>
-        <div class="content">
-            <p>Живот не уходит, потому что в нем "заперта" вода. Мы запускаем движение лимфы через главные узлы организма.</p>
-            <ul class="step-list">
-                <li><strong>Утренние вибрации:</strong> 100 мелких прыжков на носках. Это механически толкает жидкость вверх, убирая утренние отеки с лица и живота.</li>
-                <li><strong>Открытие ключиц:</strong> 20 мягких нажатий в надключичные ямки. Это "слив", куда должна уйти вся лишняя вода.</li>
-                <li><strong>Массаж диафрагмы:</strong> Глубокое дыхание животом (3 мин). Это создает вакуум в грудном протоке и засасывает лимфу от ног.</li>
-            </ul>
-        </div>
+    <div class="card" style="background: var(--dark); color: #fff;">
+        <h2>Получить PRO-протокол</h2>
+        <p>Полный гайд: 3 уровня вакуума, диета против вздутия и секретный комплекс для талии.</p>
+        <div style="font-size: 32px; font-weight: bold; margin: 20px 0;">1 490 ₽</div>
+        
+        <button class="btn-pay" onclick="startPayment()">ОПЛАТИТЬ И ПОЛУЧИТЬ</button>
+        
+        <div id="payment-form"></div>
     </div>
 
-    <div class="section-card">
-        <span class="free-label">Бесплатный доступ</span>
-        <h2>02. База узкой талии</h2>
-        <div class="content">
-            <p>Талию делает не пресс, а поперечная мышца. Вот твое первое бесплатное упражнение:</p>
-            <h3>Поверхностный вакуум:</h3>
-            <p>Сделай полный выдох, слегка согнись и втяни пупок к позвоночнику. Удерживай 15 секунд. Повтори 5 раз. Это вернет тонус внутренним мышцам, которые "держат" живот.</p>
-        </div>
-    </div>
-
-    <div class="cta-box">
-        <h2>Забрать FULL PRO ПРОТОКОЛ</h2>
-        <p style="margin-top: 15px; opacity: 0.8;">Полная 14-дневная система трансформации:</p>
-        <div style="text-align: left; max-width: 450px; margin: 30px auto; font-size: 16px;">
-            <p>✅ 3 уровня Вакуума (от новичка до PRO)</p>
-            <p>✅ Система питания против отеков и вздутия</p>
-            <p>✅ Коррекция таза (убираем "вываленный" живот)</p>
-            <p>✅ <strong>БОНУС:</strong> Полный гайд "Чистое лицо без прыщей"</p>
-        </div>
-        <div class="price">1 490 ₽</div>
-        <a href="https://yoomoney.ru/payment/shop/your_shop_id" class="btn-buy">КУПИТЬ СЕЙЧАС</a>
-    </div>
-
-    <div class="disclaimer-box">
-        <strong>ОТКАЗ ОТ ОТВЕТСТВЕННОСТИ И ПРЕДУПРЕЖДЕНИЕ:</strong><br><br>
-        Данный информационный продукт (гайд) не является медицинским советом или врачебной рекомендацией. Все предложенные техники (упражнения, советы по питанию) носят ознакомительный характер. Перед началом любых физических тренировок или изменением рациона питания вы обязаны проконсультироваться с лечащим врачом. 
-        <br><br>
-        Автор не несет ответственности за любые прямые или косвенные последствия, связанные с использованием информации, содержащейся на данном сайте. Приобретая продукт, вы подтверждаете, что ознакомлены с возможными противопоказаниями и берете на себя полную ответственность за свое здоровье. Цифровые товары (гайд в формате PDF/Web) обмену и возврату не подлежат согласно законодательству РФ.
+    <div class="disclaimer">
+        <strong>ОТКАЗ ОТ ОТВЕТСТВЕННОСТИ:</strong> Данный гайд носит ознакомительный характер. Перед выполнением упражнений проконсультируйтесь с врачом. Автор не несет ответственности за возможные травмы. Цифровые товары возврату не подлежат.
     </div>
 
     <footer>
-        <p>ШУВАРАКОВ МИХАИЛ АНТОНОВИЧ | ИНН: 540702472194</p>
-        <p>© 2026 SlimyFlex PRO. Все материалы защищены авторским правом.</p>
+        <p>ШУВАРАКОВ МИХАИЛ АНТОНОВИЧ</p>
+        <p>ИНН: 540702472194</p>
+        <p>Email: fort33tekken@gmail.com</p>
     </footer>
 </div>
+
+<script>
+function startPayment() {
+    // ВАЖНО: Токен нужно получать через API ЮKassa или создавать вручную счет в кабинете
+    const checkout = new YooMoneyCheckoutWidget({
+        confirmation_token: 'YOUR_CONFIRMATION_TOKEN', // Сюда вставляешь токен счета
+        return_url: 'https://slimyflex.ru/success.html', // Страница после оплаты
+        error_callback: function(error) { console.log(error); }
+    });
+
+    checkout.render('payment-form');
+}
+</script>
 
 </body>
 </html>
