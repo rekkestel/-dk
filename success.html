@@ -1,41 +1,567 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PRO ACCESS | SlimyFlex</title>
-    <style>
-        body { font-family: sans-serif; background: #fff; padding: 40px 20px; line-height: 1.8; }
-        .pro-container { max-width: 700px; margin: 0 auto; }
-        .step { border-left: 4px solid #B09374; padding-left: 20px; margin-bottom: 40px; }
-        h1 { color: #B09374; }
-    </style>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SlimyFlex PRO — Полный протокол</title>
+<!-- Запрет индексации поисковиками — страница секретная -->
+<meta name="robots" content="noindex, nofollow"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #FDFBF7; --accent: #B09374; --accent-light: #C9B49A; --accent-deep: #8A7057;
+    --black: #0F0E0C; --dark: #1A1915; --dark2: #252420; --text: #2C2A26; --text-muted: #6B6760;
+    --glass-bg: rgba(253,251,247,0.72); --glass-border: rgba(176,147,116,0.18);
+    --radius-lg: 36px; --radius-md: 24px; --radius-sm: 14px;
+    --shadow-card: 0 2px 24px rgba(15,14,12,0.07);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; font-weight: 300; line-height: 1.65; overflow-x: hidden; }
+  body::before {
+    content: ''; position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 0; opacity: 0.4;
+  }
+  .container { max-width: 860px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+  section { position: relative; z-index: 1; }
+
+  /* NAV */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 18px 40px; display: flex; align-items: center; justify-content: space-between; background: rgba(253,251,247,0.88); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border-bottom: 1px solid var(--glass-border); }
+  .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 600; letter-spacing: 0.04em; color: var(--black); text-decoration: none; display: flex; align-items: center; gap: 10px; }
+  .nav-logo span { color: var(--accent); }
+  .nav-badge { background: var(--accent); color: var(--black); font-family: 'DM Sans', sans-serif; font-size: 10px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; padding: 4px 10px; border-radius: 100px; }
+
+  /* HERO / WELCOME */
+  .welcome-section { padding: 120px 0 72px; }
+  .welcome-tag { display: inline-flex; align-items: center; gap: 10px; font-size: 11px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 28px; }
+  .welcome-tag::before { content: ''; display: block; width: 24px; height: 1px; background: var(--accent); }
+  .welcome-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(44px, 7vw, 80px); font-weight: 300; line-height: 1.05; letter-spacing: -0.02em; color: var(--black); margin-bottom: 24px; }
+  .welcome-title em { font-style: italic; color: var(--accent); }
+  .welcome-sub { font-size: 17px; color: var(--text-muted); max-width: 600px; line-height: 1.7; margin-bottom: 48px; }
+  .welcome-sub strong { color: var(--text); font-weight: 500; }
+  .toc-box { background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: var(--radius-md); padding: 32px 36px; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+  .toc-title { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 600; color: var(--black); margin-bottom: 20px; }
+  .toc-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .toc-list li { display: flex; align-items: center; gap: 12px; font-size: 14px; }
+  .toc-num { font-family: 'Cormorant Garamond', serif; font-size: 18px; color: var(--accent); font-weight: 600; min-width: 24px; }
+  .toc-list a { color: var(--text); text-decoration: none; transition: color 0.18s; }
+  .toc-list a:hover { color: var(--accent-deep); }
+
+  /* MODULE HEADER */
+  .module { padding: 80px 0 0; }
+  .module-header { margin-bottom: 48px; padding-bottom: 32px; border-bottom: 1px solid rgba(176,147,116,0.15); }
+  .module-num { font-family: 'Cormorant Garamond', serif; font-size: 100px; font-weight: 300; color: var(--accent); opacity: 0.12; line-height: 1; margin-bottom: -20px; }
+  .module-eyebrow { font-size: 10px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; display: block; }
+  .module-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(32px, 4.5vw, 52px); font-weight: 300; color: var(--black); line-height: 1.1; margin-bottom: 14px; }
+  .module-title em { font-style: italic; color: var(--accent); }
+  .module-lead { font-size: 16px; color: var(--text-muted); max-width: 620px; line-height: 1.7; }
+
+  /* CONTENT BLOCKS */
+  .content-block { margin-bottom: 40px; }
+  .content-block h3 { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 600; color: var(--black); margin-bottom: 16px; line-height: 1.25; }
+  .content-block h4 { font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-deep); margin-bottom: 12px; margin-top: 24px; }
+  .content-block p { font-size: 15px; color: var(--text); line-height: 1.78; margin-bottom: 14px; }
+  .content-block p:last-child { margin-bottom: 0; }
+  .content-block strong { color: var(--black); font-weight: 500; }
+
+  .highlight-box { background: rgba(176,147,116,0.07); border-left: 3px solid var(--accent); padding: 18px 22px; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; margin: 22px 0; font-size: 14px; color: var(--text-muted); font-style: italic; line-height: 1.7; }
+  .highlight-box strong { color: var(--text); font-style: normal; }
+
+  .dark-box { background: var(--dark); border-radius: var(--radius-md); padding: 32px 36px; margin: 28px 0; color: rgba(245,242,236,0.75); font-size: 15px; line-height: 1.75; position: relative; overflow: hidden; }
+  .dark-box::before { content: ''; position: absolute; top: -60px; right: -60px; width: 180px; height: 180px; border-radius: 50%; background: radial-gradient(circle, rgba(176,147,116,0.15) 0%, transparent 70%); pointer-events: none; }
+  .dark-box h4 { color: rgba(245,242,236,0.9); font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 600; margin-bottom: 14px; font-weight: 600; letter-spacing: 0; text-transform: none; }
+  .dark-box p { color: rgba(245,242,236,0.7); margin-bottom: 12px; }
+  .dark-box p:last-child { margin-bottom: 0; }
+  .dark-box strong { color: rgba(245,242,236,0.95); }
+
+  .step-list { list-style: none; padding: 0; margin: 16px 0; display: flex; flex-direction: column; gap: 12px; }
+  .step-list li { padding-left: 24px; position: relative; font-size: 15px; color: var(--text); line-height: 1.65; }
+  .step-list li::before { content: '—'; position: absolute; left: 0; color: var(--accent); }
+  .step-list li strong { color: var(--black); font-weight: 500; }
+
+  .numbered-list { list-style: none; padding: 0; margin: 16px 0; display: flex; flex-direction: column; gap: 14px; counter-reset: num; }
+  .numbered-list li { padding-left: 36px; position: relative; font-size: 15px; color: var(--text); line-height: 1.7; counter-increment: num; }
+  .numbered-list li::before { content: counter(num); position: absolute; left: 0; top: 0; width: 22px; height: 22px; background: rgba(176,147,116,0.15); border-radius: 50%; color: var(--accent-deep); font-size: 11px; font-weight: 500; display: flex; align-items: center; justify-content: center; }
+
+  .level-card { border: 1px solid var(--glass-border); border-radius: var(--radius-md); padding: 28px 32px; margin-bottom: 20px; background: var(--glass-bg); backdrop-filter: blur(8px); transition: box-shadow 0.22s; position: relative; overflow: hidden; }
+  .level-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent), transparent); }
+  .level-card:hover { box-shadow: 0 8px 32px rgba(176,147,116,0.12); }
+  .level-badge { display: inline-block; background: rgba(176,147,116,0.1); color: var(--accent-deep); font-size: 10px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; padding: 4px 12px; border-radius: 100px; margin-bottom: 12px; }
+  .level-title { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; color: var(--black); margin-bottom: 10px; }
+  .level-desc { font-size: 14px; color: var(--text-muted); line-height: 1.7; margin-bottom: 14px; }
+  .level-steps { font-size: 14px; color: var(--text); line-height: 1.7; }
+
+  .food-table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px; }
+  .food-table th { background: var(--dark); color: rgba(245,242,236,0.8); padding: 12px 16px; text-align: left; font-weight: 500; font-size: 12px; letter-spacing: 0.08em; }
+  .food-table th:first-child { border-radius: 10px 0 0 0; }
+  .food-table th:last-child { border-radius: 0 10px 0 0; }
+  .food-table td { padding: 12px 16px; border-bottom: 1px solid rgba(176,147,116,0.1); color: var(--text); vertical-align: top; line-height: 1.6; }
+  .food-table tr:last-child td { border-bottom: none; }
+  .food-table tr:hover td { background: rgba(176,147,116,0.04); }
+  .tag-eat { color: #5A7A5A; font-weight: 500; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; }
+  .tag-avoid { color: #9A5050; font-weight: 500; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; }
+
+  .timing-block { display: grid; grid-template-columns: 80px 1fr; gap: 0; margin: 20px 0; }
+  .timing-time { font-family: 'Cormorant Garamond', serif; font-size: 16px; font-weight: 600; color: var(--accent-deep); padding: 14px 0; border-right: 2px solid rgba(176,147,116,0.2); padding-right: 20px; display: flex; align-items: flex-start; }
+  .timing-content { padding: 14px 0 14px 24px; border-bottom: 1px solid rgba(176,147,116,0.1); font-size: 14px; color: var(--text); line-height: 1.65; }
+  .timing-content:last-of-type { border-bottom: none; }
+  .timing-content strong { color: var(--black); font-weight: 500; display: block; margin-bottom: 3px; font-size: 15px; }
+
+  /* DIVIDER */
+  .section-divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(176,147,116,0.25), transparent); margin: 80px 0 0; }
+
+  /* BONUS */
+  .bonus-section { padding: 80px 0; background: var(--dark); margin: 80px 0 0; }
+  .bonus-section .container { position: relative; }
+  .bonus-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(36px, 5vw, 56px); font-weight: 300; color: #F5F2EC; line-height: 1.1; margin-bottom: 20px; }
+  .bonus-title em { font-style: italic; color: var(--accent-light); }
+  .bonus-sub { font-size: 16px; color: rgba(245,242,236,0.55); line-height: 1.7; max-width: 560px; margin-bottom: 48px; }
+  .bonus-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 56px; }
+  .bonus-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(176,147,116,0.14); border-radius: var(--radius-md); padding: 28px; }
+  .bonus-card-num { font-family: 'Cormorant Garamond', serif; font-size: 36px; font-weight: 300; color: var(--accent); opacity: 0.4; line-height: 1; margin-bottom: 8px; }
+  .bonus-card-title { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 600; color: #F5F2EC; margin-bottom: 10px; }
+  .bonus-card-text { font-size: 14px; color: rgba(245,242,236,0.55); line-height: 1.65; margin-bottom: 14px; }
+  .bonus-steps { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .bonus-steps li { font-size: 13px; color: rgba(245,242,236,0.6); padding-left: 18px; position: relative; line-height: 1.6; }
+  .bonus-steps li::before { content: '·'; position: absolute; left: 4px; color: var(--accent); font-size: 16px; line-height: 1.1; }
+
+  /* DISCLAIMER */
+  .disclaimer-section { padding: 64px 0; border-top: 1px solid rgba(176,147,116,0.14); }
+  .disclaimer-box { background: rgba(176,147,116,0.04); border: 1px solid rgba(176,147,116,0.14); border-radius: var(--radius-md); padding: 32px 36px; }
+  .disclaimer-title { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 600; color: var(--black); margin-bottom: 12px; }
+  .disclaimer-text { font-size: 13px; color: var(--text-muted); line-height: 1.75; }
+  .disclaimer-text p { margin-bottom: 8px; }
+  .disclaimer-text p:last-child { margin-bottom: 0; }
+
+  /* FOOTER */
+  footer { background: var(--black); color: rgba(245,242,236,0.45); padding: 44px 0 28px; }
+  .footer-inner { display: flex; justify-content: space-between; align-items: flex-start; gap: 40px; flex-wrap: wrap; margin-bottom: 28px; }
+  .footer-brand { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 600; color: #F5F2EC; }
+  .footer-brand span { color: var(--accent); }
+  .footer-brand p { font-family: 'DM Sans', sans-serif; font-size: 12px; color: rgba(245,242,236,0.35); font-weight: 300; margin-top: 4px; }
+  .footer-details { font-size: 13px; line-height: 1.85; }
+  .footer-details a { color: var(--accent-light); text-decoration: none; }
+  .footer-details a:hover { color: var(--accent); }
+  .footer-bottom { border-top: 1px solid rgba(255,255,255,0.07); padding-top: 20px; font-size: 12px; color: rgba(245,242,236,0.2); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+
+  .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.55s ease, transform 0.55s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 720px) {
+    nav { padding: 14px 20px; }
+    .welcome-section { padding: 100px 0 56px; }
+    .module { padding: 60px 0 0; }
+    .bonus-grid { grid-template-columns: 1fr; }
+    .timing-block { grid-template-columns: 64px 1fr; }
+    .footer-inner { flex-direction: column; }
+    .footer-bottom { flex-direction: column; }
+    .food-table { font-size: 13px; }
+  }
+</style>
 </head>
 <body>
 
-<div class="pro-container">
-    <div style="text-align: center; margin-bottom: 50px;">
-        <span style="background: #000; color: #fff; padding: 5px 15px; border-radius: 20px;">PRO ДОСТУП АКТИВИРОВАН</span>
-        <h1>Твой путь к узкой талии</h1>
+<nav>
+  <a href="index.html" class="nav-logo">Slimy<span>Flex</span></a>
+  <span class="nav-badge">PRO Access</span>
+</nav>
+
+<!-- WELCOME -->
+<section class="welcome-section">
+  <div class="container">
+    <div class="welcome-tag">Полный протокол</div>
+    <h1 class="welcome-title">
+      Добро пожаловать<br>в SlimyFlex <em>PRO.</em>
+    </h1>
+    <p class="welcome-sub">
+      Вы получили доступ к системе, которая работает на уровне, где большинство людей останавливается. <strong>Здесь нет общих слов</strong> — только механика, протоколы и точные техники, которые приводят к видимому результату за 2–3 недели системной работы.
+    </p>
+    <div class="toc-box reveal">
+      <div class="toc-title">Содержание PRO-гайда</div>
+      <ul class="toc-list">
+        <li><span class="toc-num">01</span><a href="#vacuum">Три уровня прогрессии вакуума</a></li>
+        <li><span class="toc-num">02</span><a href="#nutrition">Протокол питания Anti-Acne / Anti-Отёк</a></li>
+        <li><span class="toc-num">03</span><a href="#posture">Осанка и коррекция наклона таза</a></li>
+        <li><span class="toc-num">★</span><a href="#bonus">Бонус: Гайд «Чистое лицо»</a></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- MODULE 1: VACUUM -->
+<section class="module" id="vacuum">
+  <div class="container">
+    <div class="module-header reveal">
+      <div class="module-num">01</div>
+      <span class="module-eyebrow">Прогрессия вакуума</span>
+      <h2 class="module-title">Три уровня включения<br><em>поперечной мышцы</em></h2>
+      <p class="module-lead">Базовый вакуум — это только вход. Настоящая работа начинается тогда, когда поперечная мышца научится включаться автономно, удерживаться в движении и синхронизироваться с тазовым дном. Именно эта тройка создаёт «корсетный эффект» на постоянной основе.</p>
     </div>
 
-    <div class="step">
-        <h2>Этап 1: Королевский Вакуум</h2>
-        <p>Делай 5 подходов по 30 секунд на пустой желудок. Максимально прижимай пупок к позвоночнику. Это укрепит поперечную мышцу.</p>
+    <div class="content-block reveal">
+      <div class="highlight-box">
+        <strong>Перед каждой сессией вакуума:</strong> делайте 2–3 минуты вибро-прыжков. Разогрев лимфатической системы создаёт «свободное пространство» в брюшной полости, и мышца включается глубже и мягче.
+      </div>
     </div>
 
-    <div class="step">
-        <h2>Этап 2: Питание против отеков</h2>
-        <p>Исключи молочку и сахар на 7 дней. Добавь воду с лимоном за 15 минут до завтрака. Это "сольет" лишние 2-3 кг воды.</p>
+    <div class="reveal">
+      <div class="level-card">
+        <span class="level-badge">Уровень 1 · Базовый</span>
+        <div class="level-title">Статическое удержание лёжа</div>
+        <div class="level-desc">Стартовая точка. Здесь вы учите мозг «находить» поперечную мышцу и отделять её включение от прямых и косых. Большинство людей, думая что делают вакуум, просто напрягают прямые — и получают ноль результата.</div>
+        <div class="level-steps">
+          <h4>Техника выполнения</h4>
+          <ul class="step-list">
+            <li>Лягте на спину, ноги согнуты в коленях, стопы на полу. Поясница слегка прижата, не выгнута</li>
+            <li>Сделайте медленный, глубокий вдох через нос — живот поднимается, рёбра расширяются вширь</li>
+            <li>На выдохе через слегка сомкнутые губы — медленно тяните пупок к позвоночнику. Без усилия в прямых мышцах, без задержки плечей, без поднятия таза</li>
+            <li><strong>Контрольный тест:</strong> положите руку на живот чуть ниже пупка. При правильном вакууме под рукой будет «провал» — ощущение пустоты. Если чувствуете напряжение снаружи — вы напрягаете прямые. Расслабьте их и попробуйте ещё раз</li>
+            <li>Удерживайте 5–10 секунд, дышите поверхностно. Расслабьте на 3 секунды</li>
+            <li>10–15 повторений, 2 подхода. Каждые 3 дня добавляйте по 2 секунды удержания</li>
+          </ul>
+          <div class="highlight-box">Критерий перехода на уровень 2: вы удерживаете вакуум 15 секунд, не теряя глубину включения, и можете одновременно делать поверхностный вдох, не «теряя» мышцу.</div>
+        </div>
+      </div>
+
+      <div class="level-card">
+        <span class="level-badge">Уровень 2 · Прогрессия</span>
+        <div class="level-title">Вакуум стоя + подключение тазового дна</div>
+        <div class="level-desc">Переход в вертикаль в разы усложняет задачу — гравитация тянет органы вниз, и мышца должна научиться работать против неё. Добавление тазового дна — это то, что профессиональные хореографы и пилатес-тренеры называют «двойным замком».</div>
+        <div class="level-steps">
+          <h4>Техника выполнения</h4>
+          <ul class="step-list">
+            <li>Встаньте прямо. Ноги на ширине бёдер. Колени чуть мягкие — не заблокированы</li>
+            <li>Вдох через нос, расширяя нижние рёбра вширь (представьте, что рёбра — это веер, который раскрывается горизонтально)</li>
+            <li>На выдохе — первые 2 секунды мягко подтягивайте промежность вверх (как будто останавливаете мочеиспускание). Затем через оставшиеся 3–4 секунды тяните пупок к позвоночнику</li>
+            <li>Удержание 10–15 секунд. Дышите поверхностно. Не поднимайте плечи</li>
+            <li>Расслабление полное — 5 секунд, затем повтор</li>
+            <li>10 повторений в 3 подхода. Делать утром натощак или через 2+ часа после еды</li>
+          </ul>
+          <div class="highlight-box"><strong>Почему натощак:</strong> наполненный желудок физически мешает поперечной мышце создать нужный объём. Это не просто рекомендация — это механическая необходимость.</div>
+        </div>
+      </div>
+
+      <div class="level-card">
+        <span class="level-badge">Уровень 3 · Мастерство</span>
+        <div class="level-title">Вакуум в движении + ходьба с удержанием</div>
+        <div class="level-desc">Это финальная цель. Когда поперечная мышца удерживает тонус не только в статике, но и при ходьбе, подъёме по лестнице, разговоре — именно тогда формируется устойчивый «плоский живот», который не требует специального усилия. Это и есть постуральный тонус.</div>
+        <div class="level-steps">
+          <h4>Техника выполнения</h4>
+          <ul class="step-list">
+            <li>Освойте уровень 2 минимум 2 недели, прежде чем переходить сюда</li>
+            <li>Включите вакуум стоя (как в уровне 2) — и начните медленно ходить, не теряя включения</li>
+            <li>Начните с 30 шагов удержания, затем полное расслабление. Повторите 3–5 раз</li>
+            <li>Прогрессия: добавляйте по 10 шагов каждые 3 дня. Цель — удерживать тонус при обычной прогулке 3–5 минут</li>
+            <li><strong>Дыхание:</strong> диафрагмальное, не останавливайте его. Это самое сложное на этом уровне — поперечная мышца должна работать независимо от дыхательного цикла</li>
+          </ul>
+          <div class="dark-box">
+            <h4>Когда ждать результата</h4>
+            <p>Уровень 1 — первые изменения видны через 5–7 дней. Живот начинает выглядеть более собранным, особенно по утрам.</p>
+            <p>Уровень 2 — к 14–21 дню объём талии уменьшается на 2–4 см за счёт перераспределения органов и снижения тонуса прямых мышц, которые ранее «толкали» живот наружу.</p>
+            <p><strong>Уровень 3 — устойчивый результат, который не уходит при пропуске тренировки.</strong> Именно к этому мы и движемся.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- MODULE 2: NUTRITION -->
+<section class="module" id="nutrition">
+  <div class="container">
+    <div class="module-header reveal">
+      <div class="module-num">02</div>
+      <span class="module-eyebrow">Питание против воспаления</span>
+      <h2 class="module-title">Протокол Anti-Acne<br><em>/ Anti-Отёк</em></h2>
+      <p class="module-lead">Отёки и акне — это не две разные проблемы. Это одна: хроническое тканевое воспаление низкой степени. Именно оно держит жидкость в межклеточном пространстве и провоцирует воспалительные реакции в коже. Этот протокол работает с корнем, а не с симптомами.</p>
     </div>
 
-    <div class="step">
-        <h2>Этап 3: Осанка</h2>
-        <p>Живот часто вываливается из-за наклона таза вперед. Делай упражнение "Кошка" каждый вечер по 3 минуты.</p>
+    <div class="content-block reveal">
+      <h3>Биохимика проблемы: почему вы отекаете</h3>
+      <p>Три главных механизма, которые удерживают отёк: <strong>избыток кортизола</strong> (стресс повышает задержку натрия), <strong>инсулиновые пики</strong> (резкие подъёмы инсулина нарушают натрий-калиевый баланс клеток) и <strong>провоспалительные медиаторы</strong> — простагландины и интерлейкины — которые повышают проницаемость капилляров. Жидкость буквально «утекает» из сосудов в ткани.</p>
+      <p>Питание в этом протоколе направлено на снижение всех трёх факторов одновременно. Это не «диета для похудения» — это противовоспалительный режим, проверенный нутрициологией последних 15 лет.</p>
+
+      <div class="dark-box">
+        <h4>Главное правило протокола</h4>
+        <p>Не считайте калории. Управляйте <strong>гликемическим индексом</strong> и <strong>соотношением омега-6/омега-3</strong>. Именно эти два параметра определяют уровень воспаления в теле — и, как следствие, состояние кожи и степень отёчности тканей.</p>
+      </div>
     </div>
 
-    <p style="text-align: center; margin-top: 60px; font-weight: bold;">Сохрани эту страницу в закладки, чтобы не потерять доступ!</p>
-</div>
+    <div class="content-block reveal">
+      <h3>Что есть, что исключить</h3>
+      <table class="food-table">
+        <thead>
+          <tr>
+            <th>Категория</th>
+            <th><span class="tag-eat">✓ Включить активно</span></th>
+            <th><span class="tag-avoid">✕ Исключить / сократить</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Жиры</strong></td>
+            <td>Жирная рыба (лосось, скумбрия, сельдь), льняное масло холодного отжима, авокадо, грецкие орехи</td>
+            <td>Подсолнечное и кукурузное масло, маргарин, жареное в рафинированном масле</td>
+          </tr>
+          <tr>
+            <td><strong>Углеводы</strong></td>
+            <td>Листовые овощи, брокколи, огурцы, кабачки, гречка, чечевица, ягоды</td>
+            <td>Белый хлеб, сахар, сладкие напитки, белый рис, выпечка, пакетированные соки</td>
+          </tr>
+          <tr>
+            <td><strong>Белок</strong></td>
+            <td>Яйца, индейка, нежирная говядина, рыба, бобовые, греческий йогурт без добавок</td>
+            <td>Переработанное мясо (сосиски, колбасы), молочные продукты с высокой жирностью в большом количестве</td>
+          </tr>
+          <tr>
+            <td><strong>Напитки</strong></td>
+            <td>Вода не менее 1,5–2 л, зелёный чай, имбирный отвар, вода с лимоном утром</td>
+            <td>Алкоголь, сладкие газировки, пакетированные соки, кофе более 2 чашек в день</td>
+          </tr>
+          <tr>
+            <td><strong>Специи и добавки</strong></td>
+            <td>Куркума с чёрным перцем, имбирь, корица, омега-3 в капсулах (EPA+DHA)</td>
+            <td>Готовые соусы, кетчуп, майонез, пакетированные приправы с глутаматом</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
+    <div class="content-block reveal">
+      <h3>Расписание питания: дневной протокол</h3>
+      <p>Время приёма пищи влияет на воспаление не меньше, чем состав. Главный принцип — избегать инсулиновых пиков и давать пищеварительной системе полный ночной отдых (минимум 12 часов голодания).</p>
+      <div class="timing-block">
+        <div class="timing-time">07:00</div>
+        <div class="timing-content"><strong>Старт дня</strong>Стакан тёплой воды с соком лимона и щепоткой соли. Активирует желчный пузырь и запускает лимфатический дренаж печени. Затем — вибро-прыжки и вакуум натощак.</div>
+        <div class="timing-time">08:30</div>
+        <div class="timing-content"><strong>Завтрак</strong>Яйца (2–3 шт.) + овощи + авокадо или горсть орехов. Никакой каши быстрого приготовления — только медленные углеводы, если вообще нужны. Низкий ГИ с утра задаёт тон инсулиновому фону на весь день.</div>
+        <div class="timing-time">13:00</div>
+        <div class="timing-content"><strong>Обед</strong>Белок + большая порция зелёных овощей + немного сложных углеводов. Идеально: рыба или птица + брокколи/шпинат + гречка или чечевица. Порция овощей должна занимать половину тарелки — это не метафора.</div>
+        <div class="timing-time">16:00</div>
+        <div class="timing-content"><strong>Перекус (опционально)</strong>Если есть голод — горсть орехов, яблоко с ореховой пастой без сахара, или греческий йогурт. Если не голодны — пропустите. Форсированный перекус ради «разгона метаболизма» — устаревший миф.</div>
+        <div class="timing-time">19:00</div>
+        <div class="timing-content"><strong>Ужин</strong>Лёгкий белок + некрахмалистые овощи. Рыба на пару или запечённая, листовой салат, огурцы. Никакого сахара после 18:00 — инсулиновый пик вечером критически нарушает ночной дренаж. Последний приём пищи не позже 20:00.</div>
+      </div>
+    </div>
+
+    <div class="content-block reveal">
+      <h3>Добавки: что реально работает</h3>
+      <ul class="step-list">
+        <li><strong>Омега-3 (EPA+DHA) — 2–3 г в день:</strong> снижает уровень интерлейкина-6 и TNF-α — ключевых маркеров воспаления. Принимайте с едой, содержащей жиры. Выбирайте рыбий жир, а не льняное масло — ALA из льна конвертируется в EPA/DHA неэффективно</li>
+        <li><strong>Магний глицинат — 300–400 мг перед сном:</strong> снижает кортизол, улучшает ночной лимфатический дренаж мозга и тела, уменьшает задержку воды</li>
+        <li><strong>Куркумин с пиперином — 500 мг в день:</strong> мощный ингибитор NF-κB — главного «переключателя» воспалительного каскада. Без пиперина (чёрный перец) биодоступность минимальна</li>
+        <li><strong>Цинк — 15–25 мг в день:</strong> критически важен для регуляции сальных желёз и заживления воспалительных элементов на коже. При акне чаще всего наблюдается его дефицит</li>
+      </ul>
+      <div class="highlight-box">Результат от изменения питания в среднем становится заметен через 10–14 дней. Кожа реагирует раньше — уже через 5–7 дней снижается «сальность» и воспалённость. Отёчность по утрам уходит в течение первой недели при соблюдении ночного голодания.</div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- MODULE 3: POSTURE -->
+<section class="module" id="posture">
+  <div class="container">
+    <div class="module-header reveal">
+      <div class="module-num">03</div>
+      <span class="module-eyebrow">Осанка и таз</span>
+      <h2 class="module-title">Устранение переднего наклона<br><em>таза и «вываленного» живота</em></h2>
+      <p class="module-lead">У большинства городских людей таз наклонён вперёд — передняя подвздошная ость опущена, копчик «смотрит» назад, поясница избыточно прогнута. Это называется антеверсия таза. Результат — живот буквально «вываливается» вперёд не из-за жира, а из-за угла. Это исправляемо — без операций и специального оборудования.</p>
+    </div>
+
+    <div class="content-block reveal">
+      <h3>Анатомия проблемы: почему таз наклоняется</h3>
+      <p>Антеверсия — результат мышечного дисбаланса. <strong>Короткие и напряжённые:</strong> сгибатели бедра (подвздошно-поясничная мышца), прямая мышца бедра, разгибатели поясницы. <strong>Слабые и растянутые:</strong> большая ягодичная мышца, мышцы задней поверхности бедра (хамстринги), поперечная мышца живота.</p>
+      <p>Протокол коррекции состоит из двух одновременных действий: <strong>удлинить напряжённые мышцы</strong> и <strong>активировать слабые</strong>. Делать только одно — неэффективно. Большинство людей, которые «качают ягодицы», не видят изменений в осанке именно потому, что игнорируют первую часть.</p>
+
+      <div class="dark-box">
+        <h4>Самодиагностика: есть ли у вас антеверсия?</h4>
+        <p>Встаньте боком к зеркалу в нейтральной позе. Найдите переднюю верхнюю подвздошную ость (выступ тазовой кости спереди) и заднюю верхнюю (выступ сзади). Если передняя ость находится значительно ниже задней — антеверсия есть. Если на одном уровне или задняя ниже — таз нейтрален или в ретроверсии.</p>
+        <p><strong>Дополнительный тест:</strong> лягте на пол. Если между поясницей и полом помещается ладонь — прогиб избыточный, антеверсия присутствует.</p>
+      </div>
+    </div>
+
+    <div class="content-block reveal">
+      <h3>Фаза 1 — Удлинение напряжённых мышц</h3>
+      <p>Выполняйте эти упражнения ежедневно, желательно утром и вечером. Суммарно занимает 10–12 минут.</p>
+
+      <h4>Растяжка подвздошно-поясничной мышцы (выпад с прогибом)</h4>
+      <ul class="step-list">
+        <li>Опуститесь в выпад: правое колено на полу, левая нога вперёд под углом 90°</li>
+        <li>Убедитесь, что таз не ушёл в сторону — он смотрит строго вперёд</li>
+        <li>Слегка подтяните копчик вниз (задний наклон таза) — вы почувствуете, как передняя поверхность правого бедра и паховая зона начинает растягиваться</li>
+        <li>Удержание 45–60 секунд. Дышите медленно. Каждый выдох — чуть глубже в растяжку</li>
+        <li>Смените ногу. Повторите 2–3 раза на каждую сторону</li>
+      </ul>
+
+      <h4>МФР (миофасциальный релиз) сгибателей бедра</h4>
+      <ul class="step-list">
+        <li>Лягте на живот. Подложите теннисный мяч или мяч для лакросса под переднюю часть бедра (между тазом и серединой бедра)</li>
+        <li>Медленно катайтесь по болезненным точкам. При нахождении точки — остановитесь и дышите в неё 30–45 секунд</li>
+        <li>Затем перейдите к следующей точке. 3–5 минут на каждое бедро</li>
+      </ul>
+
+      <h4>Растяжка квадрицепса стоя</h4>
+      <ul class="step-list">
+        <li>Стоя, возьмитесь за голень одной ноги сзади и тяните пятку к ягодице</li>
+        <li><strong>Ключевой момент:</strong> активно подтяните копчик вниз и вперёд, напрягая ягодицу опорной ноги. Без этого действия растяжка поверхностная</li>
+        <li>60 секунд на каждую ногу, 2 повторения</li>
+      </ul>
+    </div>
+
+    <div class="content-block reveal">
+      <h3>Фаза 2 — Активация слабых мышц</h3>
+      <p>Эти упражнения делаются после растяжки, пока мышцы-антагонисты ещё расслаблены. Именно в этот момент нейронная «дорожка» к слабым мышцам прокладывается быстрее всего.</p>
+
+      <h4>Ягодичный мостик с задержкой (активация большой ягодичной)</h4>
+      <ul class="step-list">
+        <li>Лягте на спину, ноги согнуты, стопы на полу на ширине бёдер</li>
+        <li>Перед подъёмом — подтяните поясницу к полу (задний наклон таза). Это критически важно: именно этот момент включает большую ягодичную, а не просто разгибатели спины</li>
+        <li>Поднимите таз до прямой линии бедро-корпус. Сожмите ягодицы в верхней точке максимально и задержитесь <strong>5 секунд</strong></li>
+        <li>Медленно опустите, не «бросайте» таз. 15 повторений, 3 подхода</li>
+        <li>Прогрессия: через 2 недели добавьте резиновую ленту выше колен</li>
+      </ul>
+
+      <h4>Мёртвая тяга на одной ноге (активация хамстрингов)</h4>
+      <ul class="step-list">
+        <li>Встаньте на одну ногу. Другую слегка отведите назад</li>
+        <li>Наклоняйтесь вперёд, уводя опорное бедро назад (хинж-паттерн). Спина прямая, шея — продолжение позвоночника</li>
+        <li>Почувствуйте натяжение в задней поверхности бедра. Вернитесь, сжимая ягодицу</li>
+        <li>8–10 повторений на каждую ногу, 3 подхода. Можно с бутылками воды как весами</li>
+      </ul>
+
+      <h4>Планка с нейтральным тазом (переобучение паттерна)</h4>
+      <ul class="step-list">
+        <li>Встаньте в планку на предплечьях. Большинство людей держат планку с антеверсией — живот провисает, поясница прогнута</li>
+        <li>Активно подтяните пупок к позвоночнику (вакуум), подтяните копчик вниз. Ягодицы в лёгком напряжении. Шея нейтральная</li>
+        <li>Удерживайте 30–45 секунд с <strong>качественным положением</strong>. Если положение теряется — остановитесь. Дольше не значит лучше</li>
+        <li>3–4 подхода. Делайте перед зеркалом первые 2 недели</li>
+      </ul>
+
+      <div class="dark-box">
+        <h4>Ожидаемая динамика изменений</h4>
+        <p><strong>Неделя 1–2:</strong> снижение болей в пояснице (если были), ощущение «освобождения» в тазовой зоне, первые изменения в положении таза при ходьбе.</p>
+        <p><strong>Неделя 3–4:</strong> визуальное изменение профиля живота — он начинает «уходить» без изменения веса. Это результат коррекции угла таза и включения поперечной мышцы в повседневный тонус.</p>
+        <p><strong>Месяц 2+:</strong> устойчивое изменение постурального паттерна. Мозг «перезаписывает» привычную позу. Именно здесь результат становится постоянным, а не требующим постоянных усилий.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BONUS SECTION -->
+<section class="bonus-section" id="bonus">
+  <div class="container">
+    <div class="welcome-tag" style="color: var(--accent);">★ Бонусный гайд</div>
+    <h2 class="bonus-title">«Чистое лицо»:<br><em>лимфодренаж и деконгестия</em></h2>
+    <p class="bonus-sub">Лицо — это зеркало лимфатической системы. Мешки под глазами, одутловатость скул, нечёткий овал — всё это следствие застоя в лимфатических узлах шеи и паротидной зоне. Четыре техники, которые визажисты используют перед каждой съёмкой.</p>
+
+    <div class="bonus-grid">
+      <div class="bonus-card">
+        <div class="bonus-card-num">01</div>
+        <div class="bonus-card-title">Дренаж подчелюстных узлов</div>
+        <div class="bonus-card-text">Подчелюстные лимфоузлы — первая «станция» лимфы с лица. При стрессе и недосыпе они хронически перегружены, что даёт отёчность нижней трети лица.</div>
+        <ul class="bonus-steps">
+          <li>Подушечки пальцев под нижней челюстью — мягкие круговые движения от центра к ушам</li>
+          <li>10–15 кругов, давление как при поглаживании, не нажим</li>
+          <li>Затем «сметите» лимфу от ушей вниз по шее к ключицам</li>
+          <li>Повторите 3–4 раза. Занимает 90 секунд</li>
+        </ul>
+      </div>
+
+      <div class="bonus-card">
+        <div class="bonus-card-num">02</div>
+        <div class="bonus-card-title">Работа с жевательными мышцами</div>
+        <div class="bonus-card-text">Хронически зажатые жевательные мышцы (массетер) нарушают лимфоотток с щёк и создают эффект «квадратного» лица. Особенно актуально при стрессе и скрежете зубами.</div>
+        <ul class="bonus-steps">
+          <li>Найдите жевательную мышцу: сожмите зубы — она «выскочит» на щеке</li>
+          <li>Расслабьте челюсть. Большим и указательным пальцами мягко «разминайте» мышцу круговыми движениями</li>
+          <li>2–3 минуты на каждую сторону</li>
+          <li>После: широко откройте рот и удерживайте 10 секунд — финальное расслабление</li>
+        </ul>
+      </div>
+
+      <div class="bonus-card">
+        <div class="bonus-card-num">03</div>
+        <div class="bonus-card-title">Протокол утреннего льда</div>
+        <div class="bonus-card-text">Контрастное воздействие холода резко сужает капилляры и «выдавливает» жидкость из тканей. Это механический дренаж, который работает за 2–3 минуты.</div>
+        <ul class="bonus-steps">
+          <li>Кубик льда в тканевом мешочке (не прямо на кожу)</li>
+          <li>Движение от центра лица наружу: от носа к вискам, от подбородка к ушам</li>
+          <li>Каждую зону — 5–8 секунд, затем следующая</li>
+          <li>Завершите: провести по шее сверху вниз — «смыть» лимфу к ключицам</li>
+          <li>Не используйте при куперозе и реактивной коже</li>
+        </ul>
+      </div>
+
+      <div class="bonus-card">
+        <div class="bonus-card-num">04</div>
+        <div class="bonus-card-title">Техника «Горошины» для носогубки</div>
+        <div class="bonus-card-text">Носогубные складки углубляются не только от возраста, но и от хронического отёка в средней трети лица. Точечная работа с этой зоной даёт заметный результат уже после первого применения.</div>
+        <ul class="bonus-steps">
+          <li>Указательными пальцами найдите точки у крыльев носа</li>
+          <li>Мягкие вибрирующие движения (не давление) — 30 секунд</li>
+          <li>Затем «разгладьте» от носа к скуловой кости — 5 длинных движений</li>
+          <li>Завершите: от скул по направлению к ушам и вниз по шее</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="highlight-box" style="background: rgba(176,147,116,0.08); border-color: var(--accent-light);">
+      <strong style="color: #F5F2EC;">Оптимальный порядок утреннего ритуала:</strong>
+      <span style="color: rgba(245,242,236,0.7);">Вибро-прыжки (5 мин) → Открытие ключиц → Дренаж подчелюстных узлов → Лёд на лицо → Вакуум натощак → Завтрак. Суммарно 20 минут. Именно в такой последовательности — от общего дренажа к локальному.</span>
+    </div>
+  </div>
+</section>
+
+<!-- DISCLAIMER -->
+<section class="disclaimer-section">
+  <div class="container">
+    <div class="disclaimer-box">
+      <div class="disclaimer-title">Отказ от ответственности</div>
+      <div class="disclaimer-text">
+        <p>Все материалы SlimyFlex PRO носят исключительно <strong>информационный и образовательный характер</strong> и не являются медицинской рекомендацией, диагнозом или назначением лечения. Перед началом физических практик, изменением питания или применением добавок проконсультируйтесь с врачом.</p>
+        <p>Результаты индивидуальны. Автор не несёт ответственности за последствия применения материалов без учёта индивидуальных противопоказаний. <strong>Цифровые товары возврату и обмену не подлежат.</strong></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div>
+        <div class="footer-brand">Slimy<span>Flex</span><p>PRO — Полный протокол</p></div>
+      </div>
+      <div class="footer-details">
+        <strong style="color:rgba(245,242,236,0.65); font-weight:500; display:block; margin-bottom:4px;">Реквизиты продавца</strong>
+        ИП Шувараков Михаил Антонович<br>
+        ИНН: 540702472194<br>
+        Банк: АО «ТБанк»<br>
+        Р/с: 40817810900138703642<br>
+        Email: <a href="mailto:fort33tekken@gmail.com">fort33tekken@gmail.com</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 SlimyFlex. Шувараков Михаил Антонович.</span>
+      <span>Все материалы защищены авторским правом.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i * 80); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.08 });
+  reveals.forEach(el => obs.observe(el));
+</script>
 </body>
 </html>
